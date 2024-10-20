@@ -24,7 +24,7 @@ pygame.mixer.music.load("b-music.mp3")
 pygame.mixer.music.play(-1)     # 無限循環
 
 gamedisplayS = pygame.display.set_mode((display_width,display_height))
-pygame.display.set_caption("頭文字燒")
+pygame.display.set_caption("頭文字B")
 clock = pygame.time.Clock()
 carimg = pygame.image.load("car.png")
 backgroundpic = pygame.image.load("download12.jpg")
@@ -47,7 +47,7 @@ def intro_loop():
         gamedisplayS.blit(intro_background,(0,0))
         largetext = pygame.font.Font("Fonts/mingliu.ttf",115)
         largetext.set_bold(True)
-        TextSurf,TextRect = text_object("頭文字燒",largetext)
+        TextSurf,TextRect = text_object("頭 文 字 B",largetext)
         TextRect.center = (400,100)
         gamedisplayS.blit(TextSurf,TextRect)
         button("START",150,520,100,50,green,bright_green,"play")
