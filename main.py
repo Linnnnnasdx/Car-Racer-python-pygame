@@ -55,7 +55,7 @@ def button(msg,x,y,w,h,ic,ac,action=None):
         pygame.draw.rect(gamedisplayS,ac,(x,y,w,h))
         if click[0]==1 and action!=None:
             if action=="play":
-                game_loop()
+                countdown()
             elif action=="quit":
                 pygame.quit()
                 quit()
@@ -79,6 +79,25 @@ def button(msg,x,y,w,h,ic,ac,action=None):
     textrect.center=((x+(w/2)),(y+(h/2)))
     gamedisplayS.blit(textsurf,textrect)
 
+
+def countdown():
+    countdown=True
+    while countdown:
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                pygame.quit()
+                quit()
+                sys.exit()
+        for num in range(3,0,-1):
+            gamedisplayS.fill(gray)
+            background()
+            largetext=pygame.font.Font('freesansbold.ttf',115)
+            TextSurf,TextRect=text_object(str(num),largetext)
+            TextRect.center=((display_width/2),(display_height/2))
+            gamedisplayS.blit(TextSurf,TextRect)
+            pygame.display.update()
+            clock.tick(1)
+        game_loop()
 
 def paused():
     global pause
@@ -157,12 +176,11 @@ def message_display(text):
     gamedisplayS.blit(textsurf,textrect)
     pygame.display.update()
     time.sleep(3)
-    game_loop()
 
 
 def crash():
     message_display("GAME OVER")
-
+    intro_loop()
 
 def background():
     gamedisplayS.blit(backgroundpic,(0,0))
@@ -210,8 +228,8 @@ def game_loop():
     score = 0
     global pause
     pause = False
-
     bumped = False
+
     while not bumped:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -240,11 +258,18 @@ def game_loop():
         car(x,y)
         score_system(passed,score)
 
-        # if x>680-car_width or x<120:
-        #     crash()
-
-        if x>display_width-(car_width+120) or x<120:
+        if x>display_width-(car_width+110) or x<110:
             crash()
+            bumped = True
+        
+        if y<obs_start_y+obs_height:
+            if x > obs_start_x and x < obs_start_x + obs_width or x+car_width > obs_start_x and x+car_width < obs_start_x+obs_width:
+                crash()
+                bumped = True
+
+        if bumped == True:  # 如果發生碰撞
+            break  # 結束遊戲循環
+
         if obs_start_y > display_height:
             obs_start_y = 0-obs_height
             obs_start_x = random.randrange(170,(display_width-170))
@@ -260,16 +285,12 @@ def game_loop():
                 gamedisplayS.blit(textsurf,textrect)
                 pygame.display.update()
                 time.sleep(3)
-
-
-        if y<obs_start_y+obs_height:
-            if x > obs_start_x and x < obs_start_x + obs_width or x+car_width > obs_start_x and x+car_width < obs_start_x+obs_width:
-                crash()
+                
         button("Pause",650,0,150,50,blue,bright_blue,"pause")
         pygame.display.update()
         clock.tick(60)
 
+        
 intro_loop()
-game_loop()
 pygame.quit()
 quit()
