@@ -11,7 +11,7 @@ blue=(0,0,200)
 bright_red=(255,0,0)
 bright_green=(0,255,0)
 bright_blue=(0,0,255)
-pause = True
+pause = False
 
 display_width = 800
 display_height = 600
@@ -37,8 +37,9 @@ def intro_loop():
                 quit()
                 sys.exit()
         gamedisplayS.blit(intro_background,(0,0))
-        largetext=pygame.font.Font('freesansbold.ttf',115)
-        TextSurf,TextRect=text_object("CAR GAME",largetext)
+        largetext=pygame.font.Font("Fonts/mingliu.ttf",115)
+        largetext.set_bold(True)
+        TextSurf,TextRect=text_object("頭文字燒",largetext)
         TextRect.center=(400,100)
         gamedisplayS.blit(TextSurf,TextRect)
         button("START",150,520,100,50,green,bright_green,"play")
@@ -70,8 +71,6 @@ def button(msg,x,y,w,h,ic,ac,action=None):
             elif action=="unpause":
                 pause = False
                 unpaused()
-
-
     else:
         pygame.draw.rect(gamedisplayS,ic,(x,y,w,h))
     smalltext=pygame.font.Font("freesansbold.ttf",20)
@@ -108,13 +107,14 @@ def paused():
                 quit()
                 sys.exit()
         gamedisplayS.blit(instruction_background,(0,0))
-        largetext=pygame.font.Font('freesansbold.ttf',115)
-        TextSurf,TextRect=text_object("PAUSED",largetext)
+        largetext=pygame.font.Font("Fonts/mingliu.ttf",115)
+        largetext.set_bold(True)
+        TextSurf,TextRect=text_object("暫停",largetext)
         TextRect.center=((display_width/2),(display_height/2))
         gamedisplayS.blit(TextSurf,TextRect)
-        button("CONTINUE",150,450,150,50,green,bright_green,"unpause")
-        button("RESTART",350,450,150,50,blue,bright_blue,"play")
-        button("MAIN MENU",550,450,200,50,red,bright_red,"menu")
+        button("CONTINUE",100,450,150,50,green,bright_green,"unpause")
+        button("RESTART",300,450,150,50,blue,bright_blue,"play")
+        button("MAIN MENU",500,450,200,50,red,bright_red,"menu")
         pygame.display.update()
         clock.tick(30)
 
@@ -131,27 +131,28 @@ def introduction():
                 quit()
                 sys.exit()
         gamedisplayS.blit(instruction_background,(0,0))
-        largetext=pygame.font.Font('freesansbold.ttf',80)
-        smalltext=pygame.font.Font('freesansbold.ttf',20)
-        mediumtext=pygame.font.Font('freesansbold.ttf',40)
-        textSurf,textRect=text_object("This is an car game in which you need dodge the coming cars",smalltext)
-        textRect.center=((350),(200))
+        largetext=pygame.font.Font("freesansbold.ttf",80)
+        smalltext=pygame.font.Font("Fonts/mingliu.ttf",40)
+        mediumtext=pygame.font.Font("freesansbold.ttf",60)
+        chinesetext = pygame.font.Font("Fonts/mingliu.ttf",30)
+        textSurf,textRect=text_object("躲避車輛以獲得分數，難度將隨等級上升而增加 !",chinesetext)
+        textRect.center=((400),(175))
         TextSurf,TextRect=text_object("INSTRUCTION",largetext)
         TextRect.center=((400),(100))
         gamedisplayS.blit(TextSurf,TextRect)
         gamedisplayS.blit(textSurf,textRect)
-        stextSurf,stextRect=text_object("ARROW LEFT : LEFT TURN",smalltext)
+        stextSurf,stextRect=text_object("左鍵 : 左轉",smalltext)
         stextRect.center=((150),(400))
-        hTextSurf,hTextRect=text_object("ARROW RIGHT : RIGHT TURN" ,smalltext)
+        hTextSurf,hTextRect=text_object("右鍵 : 右轉" ,smalltext)
         hTextRect.center=((150),(450))
-        atextSurf,atextRect=text_object("A : ACCELERATOR",smalltext)
+        atextSurf,atextRect=text_object("A : 加速",smalltext)
         atextRect.center=((150),(500))
-        rtextSurf,rtextRect=text_object("B : BRAKE ",smalltext)
+        rtextSurf,rtextRect=text_object("B : 結束遊戲 ",smalltext)
         rtextRect.center=((150),(550))
-        ptextSurf,ptextRect=text_object("P : PAUSE  ",smalltext)
+        ptextSurf,ptextRect=text_object("P : 暫停  ",smalltext)
         ptextRect.center=((150),(350))
         sTextSurf,sTextRect=text_object("CONTROLS",mediumtext)
-        sTextRect.center=((350),(300))
+        sTextRect.center=((200),(275))
         gamedisplayS.blit(sTextSurf,sTextRect)
         gamedisplayS.blit(stextSurf,stextRect)
         gamedisplayS.blit(hTextSurf,hTextRect)
@@ -205,8 +206,8 @@ def obstacle(obs_start_x,obs_start_y,obs):
 
 def score_system(passed,score):
     font = pygame.font.SysFont(None,25)
-    text = font.render(f"Passed: {passed}",True,black)
-    score = font.render(f"Score: {score}",True,red)
+    text = font.render(f"DODGED: {passed}",True,black)
+    score = font.render(f"SCORE: {score}",True,red)
     gamedisplayS.blit(text,(0,50))
     gamedisplayS.blit(score,(0,30))
 
@@ -218,7 +219,6 @@ def game_loop():
     # 障礙物
     obstacle_speed = 9
     obs = 1
-    y_change = 0
     obs_start_x = random.randrange(200,(display_width-200))
     obs_start_y = -750
     obs_width = 56
@@ -226,10 +226,9 @@ def game_loop():
     passed = 0
     level = 0
     score = 0
-    global pause
-    pause = False
-    bumped = False
+    y2 = 7
 
+    bumped = False
     while not bumped:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -251,7 +250,28 @@ def game_loop():
         x+=x_change
 
         gamedisplayS.fill(gray)
-        background()
+        rel_y = y2%backgroundpic.get_rect().width
+        gamedisplayS.blit(backgroundpic,(0,rel_y-y2%backgroundpic.get_rect().width))
+        gamedisplayS.blit(backgroundpic,(700,rel_y-y2%backgroundpic.get_rect().width))
+        if rel_y < 800:
+            gamedisplayS.blit(backgroundpic,(0,rel_y))
+            gamedisplayS.blit(backgroundpic,(700,rel_y))
+            gamedisplayS.blit(yellow_strip,(400,rel_y))
+            gamedisplayS.blit(yellow_strip,(400,rel_y+100))
+            gamedisplayS.blit(yellow_strip,(400,rel_y+200))
+            gamedisplayS.blit(yellow_strip,(400,rel_y+300))
+            gamedisplayS.blit(yellow_strip,(400,rel_y+400))
+            gamedisplayS.blit(yellow_strip,(400,rel_y+500))
+            gamedisplayS.blit(yellow_strip,(400,rel_y-100))
+            gamedisplayS.blit(strip,(120,rel_y-200))
+            gamedisplayS.blit(strip,(120,rel_y+20))
+            gamedisplayS.blit(strip,(120,rel_y+30))
+            gamedisplayS.blit(strip,(680,rel_y-100))
+            gamedisplayS.blit(strip,(680,rel_y+20))
+            gamedisplayS.blit(strip,(680,rel_y+30))
+
+        y2+=obstacle_speed
+
         obs_start_y -= (obstacle_speed/4)
         obstacle(obs_start_x,obs_start_y,obs)
         obs_start_y+=obstacle_speed
@@ -290,7 +310,5 @@ def game_loop():
         pygame.display.update()
         clock.tick(60)
 
-        
+
 intro_loop()
-pygame.quit()
-quit()
