@@ -1,6 +1,6 @@
 How to install pygame
 ```
-python3 -m pip install -U pygame --user
+python -m pip install -U pygame --user
 ```
 
 For more details check
