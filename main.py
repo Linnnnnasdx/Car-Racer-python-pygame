@@ -202,12 +202,12 @@ def crash():
 def background():
     gamedisplayS.blit(backgroundpic,(0,0))
     gamedisplayS.blit(backgroundpic,(700,0))
-    gamedisplayS.blit(yellow_strip,(370,0))
-    gamedisplayS.blit(yellow_strip,(370,100))
-    gamedisplayS.blit(yellow_strip,(370,200))
-    gamedisplayS.blit(yellow_strip,(370,300))
-    gamedisplayS.blit(yellow_strip,(370,400))
-    gamedisplayS.blit(yellow_strip,(370,500))
+    gamedisplayS.blit(yellow_strip,(380,0))
+    gamedisplayS.blit(yellow_strip,(380,100))
+    gamedisplayS.blit(yellow_strip,(380,200))
+    gamedisplayS.blit(yellow_strip,(380,300))
+    gamedisplayS.blit(yellow_strip,(380,400))
+    gamedisplayS.blit(yellow_strip,(380,500))
     gamedisplayS.blit(strip,(120,0))
     gamedisplayS.blit(strip,(680,0))
 
@@ -231,7 +231,7 @@ def score_system(passed,score):
 # 遊戲主循環
 def game_loop():
     # 車子起始位置
-    x = (display_width*0.4625)
+    x = (display_width*0.475)
     y = (display_height*0.8)
     x_change = 0
     # 障礙物
@@ -280,13 +280,13 @@ def game_loop():
         if rel_y < 800:
             gamedisplayS.blit(backgroundpic,(0,rel_y))
             gamedisplayS.blit(backgroundpic,(700,rel_y))
-            gamedisplayS.blit(yellow_strip,(400,rel_y))
-            gamedisplayS.blit(yellow_strip,(400,rel_y + 100))
-            gamedisplayS.blit(yellow_strip,(400,rel_y + 200))
-            gamedisplayS.blit(yellow_strip,(400,rel_y + 300))
-            gamedisplayS.blit(yellow_strip,(400,rel_y + 400))
-            gamedisplayS.blit(yellow_strip,(400,rel_y + 500))
-            gamedisplayS.blit(yellow_strip,(400,rel_y - 100))
+            gamedisplayS.blit(yellow_strip,(380,rel_y))
+            gamedisplayS.blit(yellow_strip,(380,rel_y + 100))
+            gamedisplayS.blit(yellow_strip,(380,rel_y + 200))
+            gamedisplayS.blit(yellow_strip,(380,rel_y + 300))
+            gamedisplayS.blit(yellow_strip,(380,rel_y + 400))
+            gamedisplayS.blit(yellow_strip,(380,rel_y + 500))
+            gamedisplayS.blit(yellow_strip,(380,rel_y - 100))
             gamedisplayS.blit(strip,(120,rel_y - 200))
             gamedisplayS.blit(strip,(120,rel_y + 20))
             gamedisplayS.blit(strip,(120,rel_y + 30))
