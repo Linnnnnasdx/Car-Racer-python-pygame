@@ -4,6 +4,8 @@
 ```
 python -m pip install -U pygame --user
 ```
+# DEMO
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/64Q1Otv2MaY/0.jpg)](https://www.youtube.com/watch?v=64Q1Otv2MaY "頭文字B DEMO")
 
 # 更多細節:
 https://www.pygame.org/wiki/GettingStarted
